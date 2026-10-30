@@ -1,20 +1,13 @@
-# Production Dockerfile for All Video Downloader Flask yt-dlp backend
 FROM python:3.11-slim
 
-# Install system dependencies including ffmpeg for audio/video muxing
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ffmpeg \
-    curl \
+RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
 COPY . .
 
 ENV PORT=5000
 EXPOSE 5000
-
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "120", "app:app"]
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --threads 4 --timeout 600 --graceful-timeout 30 app:app"]
