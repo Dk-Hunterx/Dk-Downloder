@@ -1,0 +1,6 @@
+{
+  "name": "All Video Downloader",
+  "description": "Download your favorite content in one place. Fast, clean, mobile-first video downloader for YouTube, Instagram, Facebook Reels, and TikTok.",
+  "requestFramePermissions": ["clipboard-read"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
